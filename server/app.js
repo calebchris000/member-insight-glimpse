@@ -30,7 +30,6 @@ const socket = new SocketServer(server);
 socket.setupSocket();
 
 const UserMiddleware = async (req, res, next) => {
-  console.log("Test");
   const userId = req.body.userId || req.params.userId || req.query.userId;
   const email = req.body.email;
   const user = await User.findOne(email ? { email } : { id: userId });
@@ -51,7 +50,7 @@ app.post("/auth/login", UserMiddleware, async (req, res) => {
     res.status(401).json({ message: "Invalid credentials" });
   } else {
     user.loggedIn = true;
-    user.lastLogin = Date.now();
+    user.lastLogin = new Date();
     user.lastLogout = null;
     user.loggedInCount += 1;
     await user.save();
@@ -82,7 +81,7 @@ app.post("/auth/logout", UserMiddleware, async (req, res) => {
   });
 
   user.loggedIn = false;
-  user.lastLogout = Date.now();
+  user.lastLogout = new Date();
   await user.save();
 
   await newActivity.save();
@@ -199,7 +198,6 @@ app.get("/users-per-hour", async (req, res) => {
         uniqueActivities.set(activity.userId.toString(), activity);
       }
     }
-    console.log(uniqueActivities, "Uniqu");
 
     const usersPerHour = Array.from(uniqueActivities.values()).reduce(
       (acc, user) => {
@@ -250,12 +248,17 @@ app.get("/metrics", async (req, res) => {
 
     if (averageSessions === "true") {
       const users = await User.find();
-      const sessions = users.map((user) => {
-        const sessionTime =
-          (user.lastLogout?.getTime() || new Date().getTime()) -
-            user.lastLogin?.getTime() || 0;
-        return sessionTime;
-      });
+      const sessions = users
+        .map((user) => {
+          const sessionTime = user.loggedIn
+            ? new Date().getTime() - new Date(user.lastLogin).getTime()
+            : user.lastLogout
+              ? new Date(user.lastLogout).getTime() -
+                new Date(user.lastLogin).getTime()
+              : 0;
+          return sessionTime;
+        })
+        .filter(Boolean);
 
       const totalSessions = sessions.reduce((acc, curr) => acc + curr, 0);
       const averageSessionTime = Math.floor(totalSessions / sessions.length);
