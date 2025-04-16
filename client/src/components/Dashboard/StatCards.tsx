@@ -65,7 +65,7 @@ const StatCards: React.FC = () => {
   useEffect(() => {
     async function fetchMetrics() {
       const response = await fetch(
-        "https://member-insight-glimpse.onrender.com/visit-distribution/metrics?activeUsers=true&totalLogins=true&averageSessions=true&pageVisits=true",
+        "https://member-insight-glimpse.onrender.com/metrics?activeUsers=true&totalLogins=true&averageSessions=true&pageVisits=true",
         {
           method: "GET",
           headers: {

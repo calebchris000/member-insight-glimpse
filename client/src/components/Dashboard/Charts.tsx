@@ -53,7 +53,7 @@ const Charts: React.FC = () => {
   useEffect(() => {
     async function fetchStats() {
       const response = await fetch(
-        "https://member-insight-glimpse.onrender.com/visit-distribution/stats",
+        "https://member-insight-glimpse.onrender.com/stats",
         {
           method: "GET",
           headers: {
@@ -73,7 +73,7 @@ const Charts: React.FC = () => {
   useEffect(() => {
     async function fetchActiveUsersByHour() {
       const response = await fetch(
-        "https://member-insight-glimpse.onrender.com/visit-distribution/users-per-hour",
+        "https://member-insight-glimpse.onrender.com/users-per-hour",
         {
           method: "GET",
           headers: {
