@@ -8,6 +8,8 @@ import User from "./user.model.js";
 import Activity, { ActivityType } from "./activity.model.js";
 import { SocketServer } from "./socket.js";
 import { GetTime } from "./utils/time.js";
+import dotenv from "dotenv";
+dotenv.config({ path: ".env" });
 
 const app = express();
 const server = http.createServer(app);
