@@ -16,7 +16,7 @@ const App = () => {
   const [socket, setSocket] = useState<Socket | null>(null);
 
   useEffect(() => {
-    const socket = io("http://localhost:3000");
+    const socket = io("https://member-insight-glimpse.onrender.com");
 
     socket.on("connect", () => {
       console.log("Connected");

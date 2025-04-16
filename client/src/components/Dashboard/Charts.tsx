@@ -27,12 +27,15 @@ const Charts: React.FC = () => {
 
   useEffect(() => {
     async function fetchDistribution() {
-      const response = await fetch("http://localhost:3000/visit-distribution", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
+      const response = await fetch(
+        "https://member-insight-glimpse.onrender.com/visit-distribution",
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
         },
-      });
+      );
 
       if (response.status === 200) {
         const data = await response.json();
@@ -49,12 +52,15 @@ const Charts: React.FC = () => {
 
   useEffect(() => {
     async function fetchStats() {
-      const response = await fetch("http://localhost:3000/stats", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
+      const response = await fetch(
+        "https://member-insight-glimpse.onrender.com/visit-distribution/stats",
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
         },
-      });
+      );
 
       if (response.status === 200) {
         const data = await response.json();
@@ -66,12 +72,15 @@ const Charts: React.FC = () => {
 
   useEffect(() => {
     async function fetchActiveUsersByHour() {
-      const response = await fetch("http://localhost:3000/users-per-hour", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
+      const response = await fetch(
+        "https://member-insight-glimpse.onrender.com/visit-distribution/users-per-hour",
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
         },
-      });
+      );
 
       if (response.status === 200) {
         const data = Object.entries(await response.json()).map((entry) => {
